@@ -1,6 +1,13 @@
 .app {
-  padding: 20px;
   font-family: Arial, sans-serif;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.app-header {
+  text-align: center;
+  margin-bottom: 30px;
 }
 
 .search-bar {
@@ -9,20 +16,52 @@
   margin-bottom: 20px;
 }
 
-.search-bar input {
+.search-input {
   flex: 1;
   padding: 10px;
   border: 1px solid #ccc;
   border-radius: 4px;
 }
 
-.search-bar button {
+.search-button, .index-button, .stats-button {
   padding: 10px 20px;
   background: #007bff;
   color: white;
   border: none;
   border-radius: 4px;
   cursor: pointer;
+}
+
+.search-button:disabled {
+  background: #ccc;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.indexing-status {
+  padding: 10px;
+  background: #e7f3ff;
+  border-radius: 4px;
+  margin-bottom: 20px;
+}
+
+.stats-section, .results-section {
+  margin-bottom: 30px;
+}
+
+.stats-grid {
+  display: flex;
+  gap: 20px;
+}
+
+.stat-item {
+  padding: 10px;
+  background: #f8f9fa;
+  border-radius: 4px;
 }
 
 .result-item {
@@ -32,9 +71,10 @@
   border-radius: 4px;
 }
 
-.result-item pre {
+.result-text {
   background: #f8f9fa;
   padding: 10px;
   border-radius: 4px;
   white-space: pre-wrap;
+  font-family: monospace;
 }
