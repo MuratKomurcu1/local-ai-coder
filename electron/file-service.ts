@@ -1,4 +1,4 @@
-// electron/file-service.ts - Enhanced with recursive indexing
+// electron/file-service.ts - DÜZELTİLMİŞ VERSİYON
 import fs from 'fs';
 import path from 'path';
 import crypto from 'crypto';
@@ -27,7 +27,7 @@ function calculateFileHash(filePath: string): string {
 }
 
 /**
- * Dosyanın metin dosyası olup olmadığını kontrol et - GENİŞLETİLMİŞ
+ * Dosyanın metin dosyası olup olmadığını kontrol et
  */
 function isTextFile(filePath: string): boolean {
   const textExtensions = [
@@ -73,14 +73,11 @@ function isTextFile(filePath: string): boolean {
 /**
  * Klasörün skip edilip edilmeyeceğini kontrol et
  */
-/**
- * Klasörün skip edilip edilmeyeceğini kontrol et - GÜVENLİK ODAKLI
- */
 function shouldSkipDirectory(dirPath: string): boolean {
   const dirName = path.basename(dirPath).toLowerCase();
   const fullPath = dirPath.toLowerCase();
   
-  // ❌ SİSTEM VE DRIVER KLASÖRLER - KESİNLİKLE ATLA
+  // Sistem yollarını kontrol et
   const systemPaths = [
     'windows', 'system32', 'syswow64', 'drivers', 'driver',
     'program files', 'program files (x86)', 'programdata',
@@ -90,41 +87,25 @@ function shouldSkipDirectory(dirPath: string): boolean {
     'msocache', 'intel', 'amd', 'nvidia', 'realtek'
   ];
   
-  // Sistem yollarını kontrol et
   for (const sysPath of systemPaths) {
     if (fullPath.includes(sysPath)) {
       return true;
     }
   }
   
-  // ❌ GELİŞTİRME ARAÇLARI - GEREKSIZ KLASÖRLER
+  // Gereksiz klasörler
   const skipDirs = [
-    // Package managers
     'node_modules', 'bower_components', 'vendor', 'packages',
     '.npm', '.yarn', '.pnpm', 'npm-cache', 'yarn-cache',
-    
-    // Version control
     '.git', '.svn', '.hg', '.bzr',
-    
-    // Build outputs
     'build', 'dist', 'out', 'target', 'bin', 'obj',
     'debug', 'release', '.next', '.nuxt', '.gatsby',
-    
-    // IDE/Editor
     '.vs', '.vscode', '.idea', '.eclipse', '.sublime',
-    
-    // Language specific
     '__pycache__', '.venv', 'venv', 'env', '.env',
     '.gradle', '.maven', 'target',
-    
-    // Cache/temp
     'cache', '.cache', 'logs', '.logs', 'tmp', 'temp',
     '.tmp', '.temp', 'temporary internet files',
-    
-    // OS specific  
     '.ds_store', 'thumbs.db', 'desktop.ini',
-    
-    // Backup/Archive
     'backup', 'backups', '.backup', '.bak'
   ];
   
@@ -137,46 +118,6 @@ function shouldSkipDirectory(dirPath: string): boolean {
   }
   
   return skipDirs.includes(dirName);
-}
-
-/**
- * Dosya yolunun güvenli olup olmadığını kontrol et
- */
-function isSafePath(filePath: string): boolean {
-  const normalizedPath = path.normalize(filePath).toLowerCase();
-  
-  // ❌ Windows sistem klasörleri
-  const unsafePaths = [
-    'c:\\windows',
-    'c:\\program files',
-    'c:\\program files (x86)',
-    'c:\\programdata',
-    'c:\\system',
-    'c:\\users\\all users',
-    'c:\\users\\default',
-    'c:\\users\\public',
-    'c:\\$'
-  ];
-  
-  for (const unsafePath of unsafePaths) {
-    if (normalizedPath.startsWith(unsafePath)) {
-      return false;
-    }
-  }
-  
-  // ✅ Güvenli user klasörleri
-  const homeDir = require('os').homedir().toLowerCase();
-  const safePaths = [
-    path.join(homeDir, 'desktop'),
-    path.join(homeDir, 'documents'),
-    path.join(homeDir, 'downloads'),
-    path.join(homeDir, 'projects'),
-    path.join(homeDir, 'code'),
-    path.join(homeDir, 'development'),
-    path.join(homeDir, 'workspace')
-  ];
-  
-  return safePaths.some(safePath => normalizedPath.startsWith(safePath.toLowerCase()));
 }
 
 /**
@@ -205,7 +146,7 @@ function chunkText(text: string, maxChunkSize: number = 1000): string[] {
 }
 
 /**
- * Tek bir dosyayı indeksle
+ * ✅ DÜZELTME: Tek bir dosyayı indeksle - saveFileMetadata çağrısı düzeltildi
  */
 async function indexFile(filePath: string): Promise<void> {
   try {
@@ -257,8 +198,8 @@ async function indexFile(filePath: string): Promise<void> {
       await db.addTextChunk(chunks[i], filePath, chunkId);
     }
 
-    // Meta verileri SQLite'a kaydet
-    db.saveFileMetadata(filePath, contentHash, stats.size);
+    // ✅ DÜZELTME: Meta verileri SQLite'a kaydet - chunk sayısı eklendi
+    db.saveFileMetadata(filePath, contentHash, stats.size, chunks.length);
     
     console.log(`✅ Indexed: ${path.basename(filePath)} (${chunks.length} chunks)`);
     
@@ -331,7 +272,7 @@ async function indexDirectory(dirPath: string, recursive: boolean, depth: number
 }
 
 /**
- * Dosya değişikliklerini izle - GENİŞLETİLMİŞ
+ * Dosya değişikliklerini izle
  */
 export function startFileWatcher(directoryPath: string): void {
   try {
