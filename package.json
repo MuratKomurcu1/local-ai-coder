@@ -1,0 +1,53 @@
+{
+  "name": "electron-vite-react",
+  "version": "2.2.0",
+  "main": "out/main/index.cjs",
+  "description": "Electron Vite React boilerplate.",
+  "author": "草鞋没号 <308487730@qq.com>",
+  "license": "MIT",
+  "private": true,
+  "debug": {
+    "env": {
+      "VITE_DEV_SERVER_URL": "http://127.0.0.1:7777/"
+    }
+  },
+  "type": "module",
+  "scripts": {
+    "dev": "electron-vite dev",
+    "build": "tsc && vite build && electron-builder",
+    "preview": "vite preview",
+    "pretest": "vite build --mode=test",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@lancedb/lancedb": "latest",
+    "@tailwindcss/postcss": "^4.1.11",
+    "axios": "^1.7.2",
+    "better-sqlite3": "^11.1.2",
+    "chokidar": "^3.6.0",
+    "electron-updater": "^6.3.9",
+    "lucide-react": "^0.534.0",
+    "node-fetch": "^3.3.2"
+  },
+  "devDependencies": {
+    "@electron-toolkit/tsconfig": "^1.0.1",
+    "@types/chokidar": "^1.7.5",
+    "@types/node": "^20.14.9",
+    "@types/node-fetch": "^2.6.12",
+    "@types/react": "^18.3.3",
+    "@types/react-dom": "^18.3.0",
+    "@vitejs/plugin-react": "^4.3.1",
+    "autoprefixer": "^10.4.21",
+    "electron": "^31.0.2",
+    "electron-builder": "^24.13.3",
+    "electron-rebuild": "^3.2.9",
+    "electron-vite": "^2.3.0",
+    "postcss-import": "^16.1.1",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "rimraf": "^6.0.1",
+    "tailwindcss": "^4.1.11",
+    "typescript": "^5.5.2",
+    "vite": "^5.3.1"
+  }
+}
